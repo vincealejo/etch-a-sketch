@@ -1,8 +1,10 @@
 const gridContainer = document.querySelector('#grid-container');
 const gridSizeButton = document.querySelector("#grid-size-button");
+const randomizeColorButton = document.querySelector("#randomize-color-button");
 
-const GRID_CONTAINER_SIZE = 700;
+const GRID_CONTAINER_SIZE = 600;
 let gridSize = 16;
+let randomizeColor = false;
 
 gridContainer.style.width = GRID_CONTAINER_SIZE + "px";
 
@@ -20,7 +22,14 @@ function createGrid(size) {
 
 gridContainer.addEventListener("mouseover", (event) => {
     const targetBlock = event.target;
-    targetBlock.style.backgroundColor = "#333"
+    if(randomizeColor) {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        targetBlock.style.backgroundColor = `rgb(${r},${g},${b})`;
+    } else  {
+        targetBlock.style.backgroundColor = "#000";
+    }
 })
 
 gridSizeButton.addEventListener("click", () => {
@@ -29,6 +38,10 @@ gridSizeButton.addEventListener("click", () => {
     } while (gridSize > 100 || gridSize < 2);
     
     createGrid(gridSize);
+})
+
+randomizeColorButton.addEventListener("click", () => {
+    randomizeColor = !randomizeColor;
 })
 
 createGrid(gridSize);
